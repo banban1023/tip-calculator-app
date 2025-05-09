@@ -1,0 +1,233 @@
+@import (css) url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@primary-green-400: hsl(172, 67%, 45%);
+@neutral-green-900: hsl(183, 100%, 15%);
+@neutral-grey-500: hsl(186, 14%, 43%);
+@neutral-grey-400: hsl(184, 14%, 56%);
+@neutral-grey-200: hsl(185, 41%, 84%);
+@neutral-grey-50: hsl(189, 47%, 97%);
+@neutral-white: hsl(0, 100%, 100%);
+@font-space-mono: 'Space Mono', monospace;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: @font-space-mono;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  background-color: @neutral-grey-200;
+  display: flex;
+  flex-direction: column;
+  header {
+    display: flex;
+    justify-content: center;
+    h1 {
+      margin: 52px 0 42px;
+      height: 54px;
+      font-size: 24px;
+      letter-spacing: 0.5em;
+      line-height: 27px;
+      color: @neutral-grey-500;
+    }
+  }
+  main {
+    background-color: @neutral-white;
+    flex: 1;
+    border-radius: 20px;
+    padding: 0 33px 33px;
+    .left {
+      h2 {
+        font-size: 15px;
+        color: @neutral-grey-500;
+        margin-bottom: 5px;
+        margin-top: 33px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .inp-number {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 20px;
+          width: 20px;
+          height: 20px;
+          background: url('~@/assets/icon-dollar.svg') no-repeat;
+        }
+        &:nth-of-type(3) {
+          &::before {
+            content: '';
+            background: url('~@/assets/icon-person.svg') no-repeat;
+          }
+        }
+        input {
+          border-radius: 5px;
+          width: 100%;
+          border: none;
+          height: 49px;
+          background-color: @neutral-grey-50;
+          display: flex;
+          flex-direction: row-reverse;
+          text-align: right;
+          padding: 0 18px 0 40px;
+          font-size: 21px;
+          font-weight: 600;
+          color: @neutral-green-900;
+          &::placeholder {
+            color: @neutral-grey-400;
+            opacity: 0.7;
+          }
+          &:focus {
+            outline: 2px solid @primary-green-400;
+          }
+        }
+      }
+      .sel-tip {
+        ul {
+          display: grid;
+          justify-content: space-between;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 17px;
+          height: 177px;
+          color: @neutral-white;
+          font-weight: 700;
+          font-size: 25px;
+          margin-top: 14px;
+          li {
+            height: 49px;
+            background-color: @neutral-green-900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            &:last-child {
+              background-color: transparent;
+            }
+            input {
+              border-radius: 5px;
+              width: 100%;
+              border: none;
+              height: 100%;
+              background-color: @neutral-grey-50;
+              display: flex;
+              flex-direction: row-reverse;
+              text-align: right;
+              padding-right: 18px;
+              font-weight: 700;
+              font-size: 25px;
+              color: @neutral-green-900;
+              &::placeholder {
+                color: @neutral-grey-500;
+              }
+            }
+          }
+        }
+      }
+    }
+    .cal-result {
+      height: 258px;
+      margin-top: 33px;
+      background-color: @neutral-green-900;
+      border-radius: 15px;
+      padding: 40px 25px 25px;
+      color: @neutral-white;
+      display: flex;
+      flex-direction: column;
+      .amount {
+        display: flex;
+        flex: 1;
+        .info {
+          flex: 1;
+          p {
+            font-weight: 700;
+            font-size: 18px;
+          }
+          span {
+            color: @neutral-grey-400;
+            font-weight: 700;
+            font-size: 15px;
+          }
+        }
+        .money {
+          font-size: 32px;
+          color: @primary-green-400;
+          font-weight: 700;
+        }
+      }
+      button {
+        width: 100%;
+        height: 49px;
+        border: none;
+        background-color: @primary-green-400;
+        color: @neutral-green-900;
+        font-size: 20px;
+        font-weight: 600;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .app {
+    main {
+      max-width: 922px;
+      margin: 0 auto;
+      display: flex;
+      max-height: 482px;
+      .left {
+        h2 {
+          margin-top: 43px;
+        }
+        padding-top: 3px;
+        .sel-tip ul {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 15px;
+          height: 113px;
+          width: 380px;
+          li {
+            width: 100%;
+            input {
+              padding: 0;
+            }
+          }
+        }
+      }
+      .cal-result {
+        width: 414px;
+        min-height: 418px;
+        margin-left: 49px;
+        .amount {
+          .money {
+            font-size: 48px;
+          }
+        }
+        button {
+          margin-top: 130px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.active {
+  background-color: @primary-green-400 !important;
+  color: @neutral-green-900;
+}
+.app main .cal-result .stopButton {
+  background-color: @neutral-grey-500;
+  cursor: default;
+}
+.app main .left h2 span {
+  color: red;
+}
