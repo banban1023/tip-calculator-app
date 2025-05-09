@@ -50,6 +50,15 @@ li {
         margin-top: 33px;
         display: flex;
         justify-content: space-between;
+        .error-text {
+          color: red;
+          font-size: 12px;
+          margin-left: 10px;
+        }
+      }
+      .error-border {
+        border: 2px solid red !important;
+        outline: none !important; // 取消绿色聚焦边框
       }
       .inp-number {
         position: relative;
@@ -179,6 +188,17 @@ li {
 
 @media (min-width: 768px) {
   .app {
+    justify-content: center;
+    header {
+      h1 {
+        margin:0 0 42px;
+        height: 54px;
+        font-size: 24px;
+        letter-spacing: 0.5em;
+        line-height: 27px;
+        color: @neutral-grey-500;
+      }
+    }
     main {
       max-width: 922px;
       margin: 0 auto;
@@ -227,7 +247,4 @@ li {
 .app main .cal-result .stopButton {
   background-color: @neutral-grey-500;
   cursor: default;
-}
-.app main .left h2 span {
-  color: red;
 }

@@ -5,9 +5,15 @@
     </header>
     <main>
       <div class="left">
-        <h2>Bill</h2>
+        <h2>Bill <span v-if="billError" class="error-text">Can't be zero</span></h2>
         <div class="inp-number">
-          <input v-model="bill" type="number" placeholder="0">
+          <input
+            v-model.number="bill"
+            type="number"
+            placeholder="0"
+            @blur="removeLeadingZero('bill')"
+            :class="{ 'error-border': billError }"
+          >
         </div>
         <h2>Select Tip %</h2>
         <div class="sel-tip">
@@ -18,12 +24,22 @@
             @click="handleNum(item.num)"
             :class="{active: item.num === activeIndex}"
             >{{item.num}}%</li>
-            <li><input type="number" v-model="custom" @click="clearActive" placeholder="Custom"></li>
+            <li><input type="number"
+            v-model="custom"
+            @click="clearActive"
+            @blur="removeLeadingZero('custom')"
+            placeholder="Custom"></li>
           </ul>
         </div>
-        <h2>Number of People</h2>
+        <h2>Number of People <span v-if="peopleError" class="error-text">Can't be zero</span></h2>
         <div class="inp-number">
-          <input type="number" v-model="numPeople" placeholder="0">
+          <input
+            type="number"
+            v-model="numPeople"
+            placeholder="0"
+            @blur="removeLeadingZero('numPeople')"
+            :class="{ 'error-border': peopleError }"
+          >
         </div>
       </div>
       <div class="cal-result">
@@ -45,10 +61,11 @@
             ${{total.toFixed(2)}}
           </div>
         </div>
-        <button
-        :disabled="!bill || !numPeople ||  (!activeIndex && !custom)"
-        @click="amountTip"
-        :class="{ stopButton: !bill || !numPeople || (!activeIndex && !custom)}">RESET</button>
+       <button
+        @click="resetForm"
+        :disabled="!bill && !numPeople && !activeIndex && !custom"
+        :class="{ stopButton: !bill && !numPeople && !activeIndex && !custom }"
+      >RESET</button>
       </div>
     </main>
     </div>
@@ -72,10 +89,32 @@ export default {
       total: 0,
       custom: null,
       ratio: 0,
-      isShow: false
+      isShow: false,
+      numPeopleError: false
     }
   },
+  computed: {
+    billError () {
+      return this.bill === 0
+    },
+    peopleError () {
+      return this.numPeople === 0
+    }
+  },
+  watch: {
+    bill: 'amountTip',
+    numPeople: 'amountTip',
+    activeIndex: 'amountTip',
+    custom: 'amountTip'
+  },
   methods: {
+    removeLeadingZero (field) {
+      if (this[field] !== null && this[field] !== '') {
+        const cleaned = Number(this[field]).toString()
+        // 保留 "0" 不动，让错误提示逻辑正常触发
+        this[field] = cleaned === '0' ? 0 : cleaned
+      }
+    },
     handleNum (num) {
       this.activeIndex = this.activeIndex === num ? null : num
       this.custom = null
@@ -98,12 +137,20 @@ export default {
       } else if (this.custom && this.custom !== '') {
         this.ratio = Number(this.custom)
         console.log(this.ratio)
+      } else {
+        this.ratio = 0
       }
-      this.tipAmount = this.bill * (this.ratio / 100) / this.numPeople
-      this.total = this.bill / this.numPeople + this.tipAmount
-      // if (!this.ratio) {
-      //   this.isShow = true
-      // }
+      const tip = bill * (this.ratio / 100)
+      this.tipAmount = tip / people
+      this.total = (bill + tip) / people
+    },
+    resetForm () {
+      this.bill = null
+      this.numPeople = null
+      this.custom = null
+      this.activeIndex = null
+      this.tipAmount = 0
+      this.total = 0
     }
   }
 }

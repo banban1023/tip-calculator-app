@@ -41,6 +41,15 @@ li {
   display: flex;
   justify-content: space-between;
 }
+.app main .left h2 .error-text {
+  color: red;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.app main .left .error-border {
+  border: 2px solid red !important;
+  outline: none !important;
+}
 .app main .left .inp-number {
   position: relative;
 }
@@ -160,6 +169,17 @@ li {
   border-radius: 5px;
 }
 @media (min-width: 768px) {
+  .app {
+    justify-content: center;
+  }
+  .app header h1 {
+    margin: 0 0 42px;
+    height: 54px;
+    font-size: 24px;
+    letter-spacing: 0.5em;
+    line-height: 27px;
+    color: hsl(186, 14%, 43%);
+  }
   .app main {
     max-width: 922px;
     margin: 0 auto;
@@ -204,7 +224,4 @@ li {
 .app main .cal-result .stopButton {
   background-color: hsl(186, 14%, 43%);
   cursor: default;
-}
-.app main .left h2 span {
-  color: red;
 }
